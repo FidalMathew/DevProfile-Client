@@ -1,0 +1,26 @@
+.Usercontainer {
+  padding: 0 28% 0 28%;
+}
+
+.userimg {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 4px solid #3e0343;
+}
+
+.LinkButton {
+  margin-top: 10px;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.LinkButton:hover {
+  background: white;
+  color: #834c9d !important ;
+  cursor: pointer;
+}

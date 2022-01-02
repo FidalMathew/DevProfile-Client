@@ -1,5 +1,5 @@
 .Usercontainer {
-  padding: 0 28% 0 28%;
+  padding: 0 27% 0 27%;
 }
 
 .userimg {
@@ -23,4 +23,24 @@
   background: white;
   color: #834c9d !important ;
   cursor: pointer;
+}
+.Blogs {
+  border: 2px solid white;
+  width: 96%;
+}
+
+.Dropdown {
+  background: white;
+  color: #834c9d;
+  margin-top: 10px;
+  padding: 6px;
+}
+
+a {
+  color: #834c9d;
+  text-decoration: none;
+}
+a:hover {
+  color: #094492;
+  text-decoration: none;
 }

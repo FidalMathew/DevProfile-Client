@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import Dropblogs from './Dropblogs';
-import Droprepo from './Droprepo';
+import Dropdown from './Dropdown';
 import "./User.css"
 
 export default function User() {
@@ -75,7 +74,7 @@ export default function User() {
 
                 {blog && <div className='Blogs'>
                     {Article.map((val, ind) => {
-                        return (<Dropblogs title={val.title} key={val.id} link={val.url} />)
+                        return (<Dropdown title={val.title} key={val.id} link={val.url} />)
 
                     })}
                 </div>}
@@ -90,7 +89,7 @@ export default function User() {
 
 
                         return (
-                            <>  {(!val.fork && val.homepage) ? <Droprepo title={val.name} key={val.id} link={val.homepage} /> : ""}</>
+                            <>  {(!val.fork && val.homepage) ? <Dropdown title={val.name} key={val.id} link={val.homepage} /> : ""}</>
                         )
 
                     })}

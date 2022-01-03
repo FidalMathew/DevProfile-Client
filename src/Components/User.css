@@ -1,5 +1,10 @@
 .Usercontainer {
-  padding: 0 27% 0 27%;
+  padding: 0 27% 10% 27%;
+  background-image: linear-gradient(#da4df1, #9ac8f0);
+  color: white;
+  background-repeat: no-repeat;
+  overflow: auto;
+  height: 100%;
 }
 
 .userimg {

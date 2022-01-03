@@ -1,0 +1,26 @@
+.EditPage {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.AdminEdit_Section {
+  width: 96vw;
+  height: 90vh;
+  box-shadow: 0px 3px 8px #000000;
+  padding: 35px;
+  display: flex;
+}
+
+.edit_section {
+  flex-basis: 65%;
+  border-right: solid #7d86ba;
+}
+
+.display_section {
+  flex-basis: 35%;
+}
+
+.api_input {
+  width: 60%;
+}

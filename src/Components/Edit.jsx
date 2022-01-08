@@ -24,12 +24,6 @@ export default function Edit() {
             });
 
             console.log(res.data);
-            // setuserLinks(res.data.links);
-            // let putText = res.data.links.text;
-            // let putLink = res.data.links.link;
-            // setuserLinks([...userLinks, { text: putText, link: putLink }])
-            // console.log("back", res.data);
-            // console.log(res.data); /// deletee later    
 
         } catch (error) {
             console.log(error);
@@ -43,7 +37,7 @@ export default function Edit() {
     const HandleSubmit = (e) => {
         e.preventDefault();
         setuserLinks([...userLinks, { text: stext, link: slink }]);
-        // console.log(userLinks);
+        console.log(userLinks);
 
         PostLink();
     }
@@ -58,21 +52,11 @@ export default function Edit() {
                     username: user.username,
                     links: userLinks
                 });
-                // console.log(res.data.links);
-                let ResArr = res.data.links;
-                // console.log(ResArr);
-                /// deletee later   
-                // ResArr.map((val) => {
-                // console.log(val.text);
-                // setuserLinks([...userLinks, { text: val.text, link: val.link }])
 
-                // })
+                let ResArr = res.data.links;
+
                 setuserLinks(ResArr);
-                console.log(userLinks);
-                // setuserLinks(res.data.links);
-                // let putText = res.data.links.text;
-                // let putLink = res.data.links.link;
-                // setuserLinks([...userLinks, { text: putText, link: putLink }])
+
 
             } catch (error) {
                 console.log(error);
@@ -83,7 +67,7 @@ export default function Edit() {
         PostLink();
 
 
-    }, []);
+    }, [user.username, userLinks]);
 
 
     return (
@@ -108,10 +92,10 @@ export default function Edit() {
 
                     <div className='AllLinks'>
                         {userLinks.map((val, ind) => {
-                            return (<div key={ind}>
+                            return (<div key={ind} className='text_link mb-2 p-2'>
 
-                                <span>{val.text}</span>
-                                <span>{val.link}</span>
+                                <div> {`text: ${val.text} `}</div>
+                                <div>{`link: ${val.link}`}</div>
 
                             </div>)
                         })}

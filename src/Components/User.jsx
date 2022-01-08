@@ -7,12 +7,15 @@ import "./User.css"
 export default function User() {
 
     const { user } = useContext(Context);
+    const [userLinks, setuserLinks] = useState([]);
+
 
     let dev = user.d_user;
     let github = user.g_user;
 
     const [Article, setArticle] = useState([]);
     const [Repo, setRepo] = useState([]);
+    const [pic, setPic] = useState("")
     const [blog, setblog] = useState(false);
     const [seeRepo, setseeRepo] = useState(false);
 
@@ -51,8 +54,11 @@ export default function User() {
             const getGithub = async () => {
                 try {
                     const res = await axios.get(`https://api.github.com/users/${github}/repos`);
-                    setRepo(res.data);
+                    // setRepo(res.data);
 
+                    const rt = await axios.get(`https://api.github.com/users/${github}`);
+                    // console.log(rt);
+                    setPic(rt.data.avatar_url);
                     // visibility:public
                     // homepage: sitelin
                 } catch (error) {
@@ -64,14 +70,40 @@ export default function User() {
         }
 
 
-    }, [dev, github])
+        const PostLink = async () => {
+
+            try {
+
+                const res = await axios.put("/links/", {
+                    username: user.username,
+                    links: userLinks
+                });
+
+                let ResArr = res.data.links;
+
+                setuserLinks(ResArr);
+
+
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        PostLink();
+
+
+
+
+
+    }, [dev, github, userLinks])
 
     return (
         <div className='Usercontainer'>
 
             <div className='d-flex flex-column justify-content-center align-items-center pt-5'>
 
-                <div> <img src="https://pbs.twimg.com/profile_images/1476756537519443970/NWjTlQi2_400x400.jpg" alt="" className='userimg' /> </div>
+                <div> <img src={pic ? pic : "https://img.icons8.com/color-glass/48/000000/code.png"} alt="" className='userimg' /> </div>
 
                 <div className='pt-2'> <h5> {user.username} </h5></div>
 
@@ -101,7 +133,14 @@ export default function User() {
                     })}
                 </div>}
 
-                <a className='LinkButton'  >  Follow me on Twitter </a>
+                {userLinks.map((val, ind) => {
+                    return (<div key={ind} className='LinkButton links'>
+
+                        <a href={val.link} target="_blank" rel="noreferrer">  {val.text} </a>
+
+                    </div>)
+                })}
+
 
 
             </div>

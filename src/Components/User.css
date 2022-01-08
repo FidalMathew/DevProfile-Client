@@ -29,6 +29,10 @@
   color: #834c9d !important ;
   cursor: pointer;
 }
+.LinkButton:hover a {
+  color: #834c9d;
+}
+
 .Blogs {
   border: 2px solid white;
   width: 96%;
@@ -41,8 +45,9 @@
   padding: 6px;
 }
 
-a {
-  color: #834c9d;
+.links a {
+  /* color: #834c9d; */
+  color: white;
   text-decoration: none;
 }
 a:hover {

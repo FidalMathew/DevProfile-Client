@@ -1,17 +1,22 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Dropdown from './Dropdown';
+import { Context } from '../Context/Context';
 import "./User.css"
 
 export default function User() {
 
-    let dev = true;
-    let github = true;
+    const { user } = useContext(Context);
+
+    let dev = user.d_user;
+    let github = user.g_user;
 
     const [Article, setArticle] = useState([]);
     const [Repo, setRepo] = useState([]);
     const [blog, setblog] = useState(false);
     const [seeRepo, setseeRepo] = useState(false);
+
+
     const DisplayBlog = () => {
         if (blog)
             setblog(false);
@@ -28,10 +33,10 @@ export default function User() {
     useEffect(() => {
 
         if (dev) {
-
+            // console.log(user.d_user);
             const getDev = async () => {
                 try {
-                    const res = await axios.get('https://dev.to/api/articles?username=fidalmathew');
+                    const res = await axios.get(`https://dev.to/api/articles?username=${dev}`);
                     setArticle(res.data);
                 } catch (error) {
                     console.log(error);
@@ -45,8 +50,7 @@ export default function User() {
 
             const getGithub = async () => {
                 try {
-                    const res = await axios.get('https://api.github.com/users/FidalMathew/repos');
-                    console.log(res.data)
+                    const res = await axios.get(`https://api.github.com/users/${github}/repos`);
                     setRepo(res.data);
 
                     // visibility:public
@@ -58,7 +62,9 @@ export default function User() {
             getGithub();
 
         }
-    }, [])
+
+
+    }, [dev, github])
 
     return (
         <div className='Usercontainer'>
@@ -67,7 +73,7 @@ export default function User() {
 
                 <div> <img src="https://pbs.twimg.com/profile_images/1476756537519443970/NWjTlQi2_400x400.jpg" alt="" className='userimg' /> </div>
 
-                <div className='pt-2'> <h5> Fidal Mathew </h5></div>
+                <div className='pt-2'> <h5> {user.username} </h5></div>
 
                 {/* Dev api  */}
                 {dev && (<div className='LinkButton' onClick={DisplayBlog}>  Read my blogs </div>)}

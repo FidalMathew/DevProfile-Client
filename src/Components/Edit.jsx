@@ -12,6 +12,8 @@ export default function Edit() {
     const [stext, setText] = useState("")
     const [slink, setLink] = useState("")
 
+
+    const [refData, setrefData] = useState(true)
     const PostLink = async () => {
 
         try {
@@ -20,10 +22,13 @@ export default function Edit() {
 
             const res = await axios.put("/links/", {
                 username: user.username,
-                links: userLinks
+                links: [...userLinks, { text: stext, link: slink }]
             });
-
-            console.log(res.data);
+            setrefData(!refData);
+            setText("");
+            setLink("");
+            console.log(refData);
+            // console.log("not eff", res.data);
 
         } catch (error) {
             console.log(error);
@@ -31,10 +36,39 @@ export default function Edit() {
 
     }
 
+    const deleteData = async (val, ind) => {
+        // console.log(ind);
+        // setuserLinks(userLinks.splice(ind, 1));
+        const ARR = userLinks.filter((v, i) => {
+
+            return i !== ind
+        })
+        console.log(ARR);
+        setuserLinks(ARR);
+        try {
+
+            console.log("reactarr", userLinks);
+
+            const res = await axios.put("/links/", {
+                username: user.username,
+                links: ARR
+            });
+            setrefData(!refData);
+            // console.log("not eff", res.data);
+
+        } catch (error) {
+            console.log(error);
+        }
 
 
+        console.log(val);
+        console.log(userLinks);
+
+
+    }
 
     const HandleSubmit = (e) => {
+        console.log("ADSad");
         e.preventDefault();
         setuserLinks([...userLinks, { text: stext, link: slink }]);
         console.log(userLinks);
@@ -43,32 +77,21 @@ export default function Edit() {
     }
 
     useEffect(() => {
-
-        const PostLink = async () => {
-
+        const getUserLink = async () => {
             try {
+                // console.log(user.username);
+                const resLink = await axios.get("/links/" + user.username);
+                setuserLinks(resLink.data.links);
 
-                const res = await axios.put("/links/", {
-                    username: user.username,
-                    links: userLinks
-                });
-
-                let ResArr = res.data.links;
-
-                setuserLinks(ResArr);
-
-
-            } catch (error) {
-                console.log(error);
+            }
+            catch (err) {
+                console.log("dadadada");
             }
 
         }
+        getUserLink(user.username);
 
-        PostLink();
-
-
-    }, [user.username, userLinks]);
-
+    }, [user.username])
 
     return (
         <div className='EditPage'>
@@ -80,10 +103,10 @@ export default function Edit() {
                         <div className="input-group flex-nowrap api_input mb-3">
 
                             <input type="text" className="form-control" placeholder="Text"
-                                aria-label="Username" aria-describedby="addon-wrapping" onChange={(e) => setText(e.target.value)} required />
+                                aria-label="Username" aria-describedby="addon-wrapping" onChange={(e) => setText(e.target.value)} value={stext} required />
 
                             <input type="text" className="form-control" placeholder="Link"
-                                aria-label="Username" aria-describedby="addon-wrapping" onChange={(e) => setLink(e.target.value)} required />
+                                aria-label="Username" aria-describedby="addon-wrapping" onChange={(e) => setLink(e.target.value)} value={slink} required />
                             <button className='ml-3 btn btn-primary' type='submit'>Add</button>
                         </div>
 
@@ -92,9 +115,9 @@ export default function Edit() {
 
                     <div className='AllLinks'>
                         {userLinks.map((val, ind) => {
-                            return (<div key={ind} className='text_link mb-2 p-2'>
+                            return (<div key={ind} className='text_link mb-2 p-2' >
 
-                                <div> {`text: ${val.text} `}</div>
+                                <div> {`text: ${val.text} `}</div> <button onClick={() => deleteData(val, ind)}>X</button>
                                 <div>{`link: ${val.link}`}</div>
 
                             </div>)
@@ -103,8 +126,8 @@ export default function Edit() {
                     </div>
                 </div>
 
-                <div className='display_section p-4'>
-                    <User />
+                <div className='display_section p-3'>
+                    <User refData={refData} />
                 </div>
             </div>
         </div>

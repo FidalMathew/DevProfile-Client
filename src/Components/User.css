@@ -1,10 +1,19 @@
 .Usercontainer {
-  padding: 0 27% 10% 27%;
+  padding: 0 15% 10% 15%;
   background-image: linear-gradient(#da4df1, #9ac8f0);
   color: white;
   background-repeat: no-repeat;
   overflow: auto;
   height: 100%;
+}
+
+.R_Usercontainer {
+  padding: 0 27% 10% 27%;
+  background-image: linear-gradient(#da4df1, #9ac8f0);
+  color: white;
+  background-repeat: no-repeat;
+  overflow: auto;
+  height: 100vh;
 }
 
 .userimg {
@@ -22,6 +31,7 @@
   padding: 10px;
   width: 100%;
   text-align: center;
+  color: white;
 }
 
 .LinkButton:hover {
@@ -50,7 +60,12 @@
   color: white;
   text-decoration: none;
 }
+
 a:hover {
   color: #094492;
   text-decoration: none;
+}
+
+h5 a {
+  color: white;
 }

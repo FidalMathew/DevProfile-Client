@@ -1,5 +1,5 @@
 import './App.css';
-import User from './Components/User'
+import Ruser from './Components/Ruser'
 import Home from './Components/Home'
 import Login from './Components/Login'
 import Register from './Components/Register'
@@ -23,7 +23,7 @@ function App() {
           <Route exact path="/register" element={user ? <Home /> : <Register />}></Route>
           <Route exact path="/login" element={user ? <Home /> : <Login />}></Route>
           <Route exact path="/edit" element={user ? <Edit /> : <Login />}></Route>
-          <Route exact path="/:uname" element={<User />}></Route>
+          <Route exact path="/user/:uname" element={<Ruser />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

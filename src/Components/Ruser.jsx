@@ -1,24 +1,28 @@
 import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import Dropdown from './Dropdown';
-import { Context } from '../Context/Context';
 import "./User.css"
 
-export default function User(props) {
 
-    const { user } = useContext(Context);
+export default function Ruser(props) {
+
+
+    const location = useLocation();
+    const path = location.pathname.split("/")[2];
+
+
     const [userLinks, setuserLinks] = useState([]);
 
+    const [github, setgithub] = useState("");
+    const [dev, setdev] = useState("");
 
-    let dev = user.d_user;
-    let github = user.g_user;
 
     const [Article, setArticle] = useState([]);
     const [Repo, setRepo] = useState([]);
     const [pic, setPic] = useState("")
     const [blog, setblog] = useState(false);
     const [seeRepo, setseeRepo] = useState(false);
-
 
     const DisplayBlog = () => {
         if (blog)
@@ -33,10 +37,52 @@ export default function User(props) {
         else
             setseeRepo(true);
     }
+
+
+
     useEffect(() => {
 
+        // /links/
+        const getUserLink = async () => {
+
+            try {
+
+                const resUser = await axios.get("/auth/" + path);
+
+                setgithub(resUser.data.g_user);
+                setdev(resUser.data.d_user);
+
+
+                try {
+                    const resLink = await axios.get("/links/" + path);
+                    setuserLinks(resLink.data.links);
+
+                }
+                catch (err) {
+                    console.log("dadadada");
+                }
+
+            }
+            catch (err) {
+                alert(`User with username ${path} does not exist`);
+            }
+
+
+
+
+
+
+
+
+
+
+        }
+
+        getUserLink();
+
+
         if (dev) {
-            // console.log(user.d_user);
+
             const getDev = async () => {
                 try {
                     const res = await axios.get(`https://dev.to/api/articles?username=${dev}`);
@@ -70,41 +116,18 @@ export default function User(props) {
 
 
 
-        // PostLink();
+
+    }, [dev, github, path])
 
 
-    }, [dev, github])
-
-
-    useEffect(() => {
-        console.log("dasd", props.refData);
-        const getUserLink = async () => {
-            try {
-                // console.log(user.username);
-                const resLink = await axios.get("/links/" + user.username);
-                setuserLinks(resLink.data.links);
-                console.log("dadadada");
-
-            }
-            catch (err) {
-                console.log("dadadada");
-            }
-
-        }
-        getUserLink();
-
-
-    }
-
-        , [props.refData, user.username])
     return (
-        <div className='Usercontainer'>
+        <div className='R_Usercontainer'>
 
             <div className='d-flex flex-column justify-content-center align-items-center pt-5'>
 
-                <div> <img src={pic ? pic : "https://cdn-icons-png.flaticon.com/512/64/64572.png"} alt="" className='userimg' /> </div>
+                <div> <img src={pic ? pic : "https://cdn-icons.flaticon.com/png/512/1144/premium/1144760.png?token=exp=1641744456~hmac=5f3eef94695f4a24f36969726311261c"} alt="" className='userimg' /> </div>
 
-                <div className='pt-2'> <h5> <a href={`https://github.com/${github}`} target="_blank" rel="noreferrer">{user.username}</a>  </h5></div>
+                <div className='pt-2'> <h5> <a href={`https://github.com/${github}`} rel="noreferrer" target="_blank">{path}</a>  </h5></div>
 
                 {/* Dev api  */}
                 {dev && (<div className='LinkButton' onClick={DisplayBlog}>  Read my blogs </div>)}
@@ -123,8 +146,6 @@ export default function User(props) {
 
                 {seeRepo && <div className='Blogs'>
                     {Repo.map((val, ind) => {
-
-
                         return (
                             <>  {(!val.fork && val.homepage) ? <Dropdown title={val.name} key={val.id} link={val.homepage} /> : ""}</>
                         )

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 export default function Register() {
-    const userRef = useRef();
+    const emailRef = useRef();
     const passwordRef = useRef();
     const { user, dispatch, isFetching } = useContext(Context);
 
@@ -15,11 +15,12 @@ export default function Register() {
         dispatch({ type: "LOGIN_START" });
         try {
             const res = await axios.post("/auth/login", {
-                username: userRef.current.value,
+                email: emailRef.current.value,
                 password: passwordRef.current.value,
             });
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
         } catch (err) {
+            alert('Error while Login');
             dispatch({ type: "LOGIN_FAILURE" });
         }
     };
@@ -34,7 +35,7 @@ export default function Register() {
                 <h3 className='text-center mb-4'>Sign in to Dev_profile Account </h3>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <input type="text" className="form-control" placeholder='Username' ref={userRef} />
+                        <input type="text" className="form-control" placeholder='Email' ref={emailRef} />
                     </div>
                     <div className="mb-4">
                         <input type="password" className="form-control" placeholder='Password' ref={passwordRef} />

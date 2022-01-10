@@ -3,6 +3,7 @@ import User from './User'
 import "./edit.css"
 import { Context } from '../Context/Context';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 export default function Edit() {
 
     const { user } = useContext(Context);
@@ -20,7 +21,7 @@ export default function Edit() {
 
             console.log("reactarr", userLinks);
 
-            const res = await axios.put("/links/", {
+            await axios.put("/links/", {
                 username: user.username,
                 links: [...userLinks, { text: stext, link: slink }]
             });
@@ -49,7 +50,7 @@ export default function Edit() {
 
             console.log("reactarr", userLinks);
 
-            const res = await axios.put("/links/", {
+            await axios.put("/links/", {
                 username: user.username,
                 links: ARR
             });
@@ -127,10 +128,16 @@ export default function Edit() {
                 </div>
 
                 <div className='display_section p-3'>
+                    <div className='p-2 bg-dark'>
+                        <div className='text-white pl-2'>To- <Link to="/" className='text-light' > Home Page</Link></div>
+
+                        <div className='text-white pl-2'>To- <Link to={`/user/${user.username}`} className='text-light' target="_blank"> DEV_Profile</Link></div>
+
+                    </div>
                     <User refData={refData} />
                 </div>
             </div>
-        </div>
+        </div >
 
     )
 }

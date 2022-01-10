@@ -5,3 +5,18 @@ body {
   color: white;
   background-repeat: no-repeat;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10%;
+  /* border: solid 4px rgb(255, 255, 255); */
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgb(99, 5, 117);
+  /* border: solid 4px rgb(255, 255, 255); */
+}

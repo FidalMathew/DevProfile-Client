@@ -3,6 +3,7 @@ import Ruser from './Components/Ruser'
 import Home from './Components/Home'
 import Login from './Components/Login'
 import Register from './Components/Register'
+import Notfound from './Components/Notfound'
 import { useContext } from 'react'
 import {
   BrowserRouter,
@@ -24,6 +25,8 @@ function App() {
           <Route exact path="/login" element={user ? <Home /> : <Login />}></Route>
           <Route exact path="/edit" element={user ? <Edit /> : <Login />}></Route>
           <Route exact path="/user/:uname" element={<Ruser />}></Route>
+          <Route path="*" element={<Notfound />}></Route>
+
         </Routes>
       </BrowserRouter>
     </div>

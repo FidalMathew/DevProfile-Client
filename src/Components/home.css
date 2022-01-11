@@ -3,12 +3,14 @@
   display: grid;
   place-items: center;
 }
-
+h1 {
+  font-size: 2.2rem;
+}
 .home_content {
   width: 96vw;
   height: 90vh;
   box-shadow: 0px 3px 8px #000000;
-  padding: 35px;
+
   display: flex;
   flex-direction: column;
 }
@@ -34,4 +36,17 @@ span {
 }
 span:hover {
   text-decoration: underline;
+}
+
+img {
+  margin-top: 3%;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 1000px) {
+  h1 {
+    font-size: 2em;
+  }
 }

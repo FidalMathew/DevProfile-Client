@@ -14,12 +14,13 @@ export default function Edit() {
     const [slink, setLink] = useState("")
 
 
+    const [show, setshow] = useState(true);
+
     const [refData, setrefData] = useState(true)
     const PostLink = async () => {
 
         try {
 
-            console.log("reactarr", userLinks);
 
             await axios.put("/links/", {
                 username: user.username,
@@ -28,51 +29,43 @@ export default function Edit() {
             setrefData(!refData);
             setText("");
             setLink("");
-            console.log(refData);
-            // console.log("not eff", res.data);
 
         } catch (error) {
             console.log(error);
+            alert("Error!");
         }
 
     }
 
     const deleteData = async (val, ind) => {
-        // console.log(ind);
         // setuserLinks(userLinks.splice(ind, 1));
         const ARR = userLinks.filter((v, i) => {
 
             return i !== ind
         })
-        console.log(ARR);
         setuserLinks(ARR);
         try {
 
-            console.log("reactarr", userLinks);
 
             await axios.put("/links/", {
                 username: user.username,
                 links: ARR
             });
             setrefData(!refData);
-            // console.log("not eff", res.data);
 
         } catch (error) {
             console.log(error);
+            alert("error");
         }
 
 
-        console.log(val);
-        console.log(userLinks);
 
 
     }
 
     const HandleSubmit = (e) => {
-        console.log("ADSad");
         e.preventDefault();
         setuserLinks([...userLinks, { text: stext, link: slink }]);
-        console.log(userLinks);
 
         PostLink();
     }
@@ -80,19 +73,33 @@ export default function Edit() {
     useEffect(() => {
         const getUserLink = async () => {
             try {
-                // console.log(user.username);
                 const resLink = await axios.get("/links/" + user.username);
                 setuserLinks(resLink.data.links);
 
             }
             catch (err) {
-                console.log("dadadada");
+                alert("error!")
+                console.log(err);
             }
 
         }
         getUserLink(user.username);
 
     }, [user.username])
+
+
+    const ToggleDisplay = (e) => {
+        // console.log(e);
+        console.log("DAsd");
+        if (e.target.innerText === "CLOSE")
+            e.target.innerText = "PREVIEW"
+        else
+            e.target.innerText = "CLOSE";
+
+        setshow(!show);
+        // if()
+
+    }
 
     return (
         <div className='EditPage'>
@@ -125,9 +132,11 @@ export default function Edit() {
                         })}
 
                     </div>
+
+                    <button className='display_userlinks' onClick={(e) => ToggleDisplay(e)}>Preview</button>
                 </div>
 
-                <div className='display_section p-3'>
+                <div className={`${show ? `d-block` : `d-none`} display_section `}>
                     <div className='p-2 bg-dark'>
                         <div className='text-white pl-2'>To- <Link to="/" className='text-light' > Home Page</Link></div>
 

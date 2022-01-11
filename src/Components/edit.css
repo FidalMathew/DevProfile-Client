@@ -21,10 +21,7 @@
 
 .display_section {
   flex-basis: 35%;
-}
-
-.api_input {
-  width: 60%;
+  padding: 20px;
 }
 
 .text_link {
@@ -49,3 +46,33 @@
   height: 35px;
 }
 /* AllLinks */
+.display_userlinks {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .display_section {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+    z-index: 2;
+  }
+  .edit_section {
+    flex-basis: 100%;
+    border-right: none;
+  }
+
+  .display_userlinks {
+    z-index: 10;
+    position: absolute;
+    font-size: 2em;
+    bottom: 10%;
+    left: 15%;
+    display: block;
+    box-shadow: 0px 2px 5px #4b4b4b;
+  }
+}

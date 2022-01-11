@@ -36,7 +36,6 @@ export default function User(props) {
     useEffect(() => {
 
         if (dev) {
-            // console.log(user.d_user);
             const getDev = async () => {
                 try {
                     const res = await axios.get(`https://dev.to/api/articles?username=${dev}`);
@@ -61,6 +60,7 @@ export default function User(props) {
                     setPic(rt.data.avatar_url);
 
                 } catch (error) {
+                    alert(error)
                     console.log(error);
                 }
             }
@@ -69,25 +69,18 @@ export default function User(props) {
         }
 
 
-
-        // PostLink();
-
-
     }, [dev, github])
 
 
     useEffect(() => {
-        console.log("dasd", props.refData);
         const getUserLink = async () => {
             try {
-                // console.log(user.username);
                 const resLink = await axios.get("/links/" + user.username);
                 setuserLinks(resLink.data.links);
-                console.log("dadadada");
 
             }
             catch (err) {
-                console.log("dadadada");
+                alert("error");
             }
 
         }
